@@ -20,6 +20,7 @@ The complete setup is documented in the [deployment walkthrough](deployment.md).
 ## Navigation
 
 - [Full deployment walkthrough](deployment.md)
+- [Home Assistant and home-functions setup](home-assistant.md)
 - [Architecture](architecture.md)
 - [Operations](operations.md)
 - [Services](services.md)
@@ -28,6 +29,7 @@ The complete setup is documented in the [deployment walkthrough](deployment.md).
 
 - [alice-tts](services/alice-tts.md) - speech synthesis.
 - [function-state-server](services/function-state-server.md) - MQTT-backed states and functions.
+- [home-functions](services/home-functions.md) - Home Assistant devices as states and functions.
 - [https-proxy](services/https-proxy.md) - TLS reverse proxy.
 - [nlp-service](services/nlp-service.md) - deterministic parser.
 - [processor](services/processor.md) - LLM processor.

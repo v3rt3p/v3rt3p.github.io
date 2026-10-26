@@ -37,6 +37,18 @@ services:
       - ./function-state-server/ca-cert.pem:/app/ca-cert.pem:ro
     expose: ["8080"]
 
+  home-functions:
+    build: ./home-functions
+    restart: unless-stopped
+    environment:
+      PORT: 8080
+      CONFIG_PATH: /app/config.yaml
+      HASS_BASE_URL: ${HASS_BASE_URL:?Set HASS_BASE_URL in .env}
+      HASS_TOKEN: ${HASS_TOKEN:?Set HASS_TOKEN in .env}
+    volumes:
+      - ./home-functions/config.yaml:/app/config.yaml:ro
+    expose: ["8080"]
+
   processor:
     build: ./processor
     restart: unless-stopped
@@ -45,13 +57,15 @@ services:
       OPENAI_API_KEY: ${OPENAI_API_KEY:?Set OPENAI_API_KEY in .env}
       OPENAI_BASE_URL: ${OPENAI_BASE_URL:-https://llm.bksp.in}
       OPENAI_MODEL: ${OPENAI_MODEL:-Qwen2.5-32B-Instruct}
-      PROCESSOR_FUNCTION_SERVER_URLS: http://function-state-server:8080
-      PROCESSOR_STATE_SERVER_URLS: http://function-state-server:8080
+      PROCESSOR_FUNCTION_SERVER_URLS: http://function-state-server:8080,http://home-functions:8080
+      PROCESSOR_STATE_SERVER_URLS: http://function-state-server:8080,http://home-functions:8080
       NLP_SERVICE_URL: http://nlp-service:8090
       PROMPT_TEMPLATE_PATH: /app/prompt.handlebars
       STATE_PROMPT_TEMPLATE_PATH: /app/prompt-state.handlebars
     depends_on:
       function-state-server:
+        condition: service_started
+      home-functions:
         condition: service_started
       nlp-service:
         condition: service_started

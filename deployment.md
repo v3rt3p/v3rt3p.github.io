@@ -8,12 +8,13 @@ Razvalisa is a set of processes running in one Docker Compose network:
 2. `processor` accepts WebSocket sessions from Quasar, builds context, and calls an OpenAI-compatible LLM.
 3. `nlp-service` handles common commands quickly without an LLM call.
 4. `function-state-server` provides states and functions to processor through MQTT-backed providers.
-5. `quasistreaming-gigam` recognizes incoming audio over WebSocket.
-6. `alice-tts` converts text to OGG through Yandex UniProxy.
-7. `push-service` forwards MQTT events to the Quasar HTTP API.
-8. `speaker-identifier` stores and compares voice embeddings.
-9. `postgres` stores Quasar station data.
-10. `https-proxy` is an optional external TLS reverse proxy.
+5. `home-functions` exposes Home Assistant devices as states and functions.
+6. `quasistreaming-gigam` recognizes incoming audio over WebSocket.
+7. `alice-tts` converts text to OGG through Yandex UniProxy.
+8. `push-service` forwards MQTT events to the Quasar HTTP API.
+9. `speaker-identifier` stores and compares voice embeddings.
+10. `postgres` stores Quasar station data.
+11. `https-proxy` is an optional external TLS reverse proxy.
 
 GitHub Pages hosts documentation only. Docker containers must run on your server, VPS, or local Docker host.
 
@@ -44,6 +45,7 @@ mkdir razvalisa && cd razvalisa
 git clone https://github.com/v3rt3p/docs.git docs
 git clone https://github.com/v3rt3p/alice-tts.git alice-tts
 git clone https://github.com/v3rt3p/function-state-server.git function-state-server
+git clone https://github.com/v3rt3p/home-functions.git home-functions
 git clone https://github.com/v3rt3p/https-proxy.git https-proxy
 git clone https://github.com/v3rt3p/nlp-service.git nlp-service
 git clone https://github.com/v3rt3p/processor.git processor
@@ -69,6 +71,8 @@ POSTGRES_PASSWORD=<long-random-password>
 OPENAI_API_KEY=<llm-api-key>
 MQTT_URL=mqtts://<user>:<password>@<broker>:8883
 GLAGOL_JWT_KEY=<long-random-secret>
+HASS_BASE_URL=http://<home-assistant-host>:8123
+HASS_TOKEN=<long-lived-home-assistant-token>
 ```
 
 Never commit `.env`. Do not publish MQTT credentials, LLM keys, `GLAGOL_JWT_KEY`, `ca.key`, or enrollment profiles.
@@ -76,6 +80,8 @@ Never commit `.env`. Do not publish MQTT credentials, LLM keys, `GLAGOL_JWT_KEY`
 ### State and function configuration
 
 Review `function-state-server/config.yaml`. An empty file starts successfully but declares no functions or states. Use `config.example.yaml` as a starting point, then configure the real MQTT topics and external HTTP endpoints.
+
+Review `home-functions/config.yaml`. In Home Assistant, create a label (for example `alice`), assign it to the devices to expose, then list it under `labels:` in the config. Per-entity `modes:` renames are optional; see `home-functions/config.example.yaml`. The service needs `HASS_BASE_URL` and `HASS_TOKEN` to reach Home Assistant. Step-by-step instructions (token, labels, mode renames, verification) are in the [Home Assistant setup guide](home-assistant.md).
 
 ### Quasar configuration
 
@@ -216,6 +222,7 @@ docker compose logs --tail=200 -f SERVICE_NAME
 ## 11. Common problems
 
 - **Empty `function-state-server`:** populate `config.yaml`, otherwise processor sees no functions.
+- **`home-functions` exposes nothing:** assign the configured label to entities in Home Assistant and check `HASS_BASE_URL`/`HASS_TOKEN`.
 - **Processor cannot call the LLM:** check `OPENAI_API_KEY`, `OPENAI_BASE_URL`, and `OPENAI_MODEL`.
 - **Quasar cannot reach processor:** use `http://processor:8080` inside Compose, not `localhost`.
 - **ASR takes a long time to start:** wait for the model download and verify the `gigaam-cache` volume.
