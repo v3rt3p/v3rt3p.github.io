@@ -114,4 +114,6 @@ services:
 10. ????
 11. PROFIT
 
+Хотите управлять устройствами из Home Assistant голосом — подключите [home-functions](home-functions.md).
+
 Если что-то развалиось - не стесняйтесь, пишите [мне](https://re146.dev)
