@@ -10,9 +10,9 @@ navigation:
   logo:
     url: "https://github.com/v3rt3p"
     dark:
-      icon: "../assets/v3rt3p-logo.png"
+      icon: "/assets/v3rt3p-logo.png"
     light:
-      icon: "../assets/v3rt3p-logo.png"
+      icon: "/assets/v3rt3p-logo.png"
   header:
     leftItems:
       - text: "v3rt3p"

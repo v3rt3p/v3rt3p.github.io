@@ -1,3 +1,5 @@
 allowHTML: true
 lang: 'en'
 langs: ['en', 'ru']
+interface:
+  favicon-src: '/assets/v3rt3p-logo.png'
