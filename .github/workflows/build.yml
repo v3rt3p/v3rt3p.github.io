@@ -29,10 +29,11 @@ jobs:
         uses: diplodoc-platform/docs-build-static-action@v1
         with:
           src-root: ./
+          build-root: ./_site
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./build
+          path: ./_site
   deploy:
     needs: build-docs
     environment:

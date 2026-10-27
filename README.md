@@ -5,9 +5,9 @@ Documentation for the self-hosted v3rt3p voice assistant stack, built with [Dipl
 ## Local preview
 
 ```sh
-rm -rf build
-npx -y @diplodoc/cli -i ./ -o ./build
-npx -y http-server ./build --port=5000 --host=127.0.0.1 --cors
+rm -rf _site
+npx -y @diplodoc/cli -i ./ -o ./_site
+npx -y http-server ./_site --port=5000 --host=127.0.0.1 --cors
 ```
 
 Open http://127.0.0.1:5000/en/ or http://127.0.0.1:5000/ru/.
