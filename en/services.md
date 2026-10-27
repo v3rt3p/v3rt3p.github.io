@@ -7,6 +7,7 @@ The legacy deployment contains five application services and PostgreSQL. The lin
 | [`quasistreaming-gigam`](services/quasistreaming-gigam.md) | Streaming speech recognition | WebSocket `8080` |
 | [`supertonic-tts`](services/supertonic-tts.md) | Russian speech synthesis | HTTP `9150` |
 | [`processor`](services/processor.md) | Prompting, LLM calls, and optional tools | WebSocket `/process` on `8080` |
+| [`home-functions`](services/home-functions.md) | Home Assistant devices as functions and states | HTTP `8080` |
 | PostgreSQL | Persistent Quasar data | PostgreSQL `5432` |
 
 These services communicate over the private Docker Compose network. Publish only the ports you actually need.
