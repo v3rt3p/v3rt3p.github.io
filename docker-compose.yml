@@ -1,0 +1,80 @@
+services:
+  https-proxy:
+    build: https://github.com/v3rt3p/https-proxy.git
+    restart: unless-stopped
+    environment:
+      YANDEX_UPSTREAM_URL: http://quasar-server:31115
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - quasar-server
+
+  quasar-server:
+    build: https://github.com/v3rt3p/quasar-server.git
+    restart: unless-stopped
+    environment:
+      ALLOW_UPDATES: "true"
+      PORT: "31115"
+      API_PORT: "31116"
+      TTS_OPENAI_BASE_URL: http://supertonic-tts:9150
+      TTS_OPENAI_VOICE: "F1"
+      PROCESSOR_BASIC_URL: http://processor:8080
+      STT_GIGAAM_URL: ws://quasistreaming-gigam:8080
+      POSTGRES_URL: postgres://quasar:${POSTGRES_PASSWORD:-change-me}@postgres:5432/quasar
+    ports:
+      - "31116:31116"
+    depends_on:
+      - postgres
+      - processor
+      - quasistreaming-gigam
+      - supertonic-tts
+
+  postgres:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: quasar
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change-me}
+      POSTGRES_DB: quasar
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  quasistreaming-gigam:
+    build:
+      context: https://github.com/v3rt3p/quasistreaming-gigam.git
+      dockerfile: ${ASR_DOCKERFILE:-Dockerfile.cpu}
+    restart: unless-stopped
+    environment:
+      GIGAAM_DEVICE: ${GIGAAM_DEVICE:-cpu}
+      GIGAAM_DOWNLOAD_ROOT: /app/.cache/gigaam
+    volumes:
+      - gigaam-cache:/app/.cache/gigaam
+
+  supertonic-tts:
+    build: https://github.com/v3rt3p/supertonic-tts.git
+    restart: unless-stopped
+    environment:
+      ASSETS_PATH: /assets
+    volumes:
+      - ./supertonic-tts/assets:/assets:ro
+
+  processor:
+    build: https://github.com/v3rt3p/processor.git
+    restart: unless-stopped
+    environment:
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL:-https://api.openai.com/v1}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:?Set OPENAI_API_KEY}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4o-mini}
+      PROCESSOR_FUNCTION_SERVER_URLS: ""
+      PROCESSOR_STATE_SERVER_URLS: ""
+      PROMPT_TEMPLATE_PATH: /prompt.handlebars
+      STATE_PROMPT_TEMPLATE_PATH: /prompt-state.handlebars
+      CACHE_SIZE: "1000"
+    volumes:
+      - ./prompt.handlebars:/prompt.handlebars:ro
+      - ./prompt-state.handlebars:/prompt-state.handlebars:ro
+
+volumes:
+  postgres-data:
+  gigaam-cache:

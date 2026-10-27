@@ -1,0 +1,61 @@
+title: v3rt3p documentation
+href: index.yaml
+
+logo:
+  text: v3rt3p
+
+description: Self-hosted voice assistant documentation
+
+navigation:
+  logo:
+    url: "https://github.com/v3rt3p"
+    dark:
+      icon: "../assets/v3rt3p-logo.png"
+    light:
+      icon: "../assets/v3rt3p-logo.png"
+  header:
+    leftItems:
+      - text: "v3rt3p"
+        type: "link"
+        url: "../en"
+      - text: "Русский"
+        type: "link"
+        url: "../ru"
+    rightItems:
+      - type: "controls"
+
+items:
+  - name: About
+    href: index.md
+  - name: Getting started
+    href: getting-started.md
+  - name: Architecture
+    href: architecture.md
+  - name: Services
+    href: services.md
+    items:
+      - name: https-proxy
+        href: services/https-proxy.md
+      - name: quasar-server
+        href: services/quasar-server.md
+        items:
+          - name: HTTP API
+            href: services/quasar-server/http-api.md
+      - name: quasistreaming-gigam
+        href: services/quasistreaming-gigam.md
+        items:
+          - name: WebSocket API
+            href: services/quasistreaming-gigam/websocket-api.md
+      - name: supertonic-tts
+        href: services/supertonic-tts.md
+      - name: processor
+        href: services/processor.md
+        items:
+          - name: WebSocket API
+            href: services/processor/websocket-api.md
+          - name: Function/state server API
+            href: services/processor/function-state-server-api.md
+      - name: PostgreSQL
+        href: services/postgres.md
+  - name: Operations
+    href: operations.md

@@ -1,0 +1,15 @@
+title: v3rt3p documentation
+description: Self-hosted voice assistant documentation
+links:
+  - title: Getting started
+    description: Run the full stack locally.
+    href: getting-started.md
+  - title: Architecture
+    description: Understand the service boundaries and data path.
+    href: architecture.md
+  - title: Services
+    description: Configure each service and its environment variables.
+    href: services.md
+  - title: Operations
+    description: Maintain and troubleshoot a deployment.
+    href: operations.md

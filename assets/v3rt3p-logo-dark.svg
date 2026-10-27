@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 56" role="img" aria-labelledby="title">
+  <title id="title">v3rt3p</title>
+  <rect width="240" height="56" rx="12" fill="#d9f9e8"/>
+  <path d="M24 17h8l8 19 8-19h8L44 43h-8L24 17Z" fill="#07503b"/>
+  <path d="M63 17h7v26h-7V17Zm0-9h7v6h-7V8Zm15 9h7v3c2-2 5-4 9-4 7 0 11 5 11 13v4c0 8-4 13-11 13-4 0-7-2-9-4v12h-7V17Zm7 12c0 5 2 8 6 8s6-3 6-8v-1c0-5-2-8-6-8s-6 3-6 8v1Z" fill="#07503b"/>
+  <text x="128" y="37" fill="#07503b" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22" font-weight="700" letter-spacing="1">v3rt3p</text>
+</svg>
