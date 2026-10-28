@@ -14,8 +14,8 @@
 | `PROMPT_TEMPLATE_PATH` | Нет | `prompt.handlebars` | Основной prompt. |
 | `STATE_PROMPT_TEMPLATE_PATH` | Нет | `prompt-state.handlebars` | Prompt состояния. |
 | `FUNCTIONS_PROMPT_TEMPLATE_PATH` | Нет | `prompt-functions.handlebars` | Prompt функций. |
-| `PROCESSOR_FUNCTION_SERVER_URLS` | Нет | - | URL function-сервисов через запятую. |
-| `PROCESSOR_STATE_SERVER_URLS` | Нет | - | URL state-сервисов через запятую. |
+| `PROCESSOR_FUNCTION_SERVER_URLS` | Нет | - | Полные URL эндпоинтов функций (с `/functions`) через запятую без пробелов. |
+| `PROCESSOR_STATE_SERVER_URLS` | Нет | - | Полные URL эндпоинтов состояния (с `/state`) через запятую без пробелов. |
 | `PROCESSOR_MCP_SERVER_URLS` | Нет | - | MCP URL в формате `URL#server-name`. |
 | `NLP_SERVICE_URL` | Нет | - | Необязательный NLP shortcut-сервис. |
 | `NLP_SERVICE_TIMEOUT_MS` | Нет | `500` | Таймаут NLP-запроса. |

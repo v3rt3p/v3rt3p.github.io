@@ -1,6 +1,6 @@
 # API function/state-сервера
 
-Processor использует HTTP-сервисы для состояния и функций. Их базовые URL задаются через `PROCESSOR_STATE_SERVER_URLS` и `PROCESSOR_FUNCTION_SERVER_URLS`.
+Processor использует HTTP-сервисы для состояния и функций. Полные URL эндпоинтов задаются через `PROCESSOR_STATE_SERVER_URLS` (например, `http://home-functions:8080/state`) и `PROCESSOR_FUNCTION_SERVER_URLS` (`http://home-functions:8080/functions`). Процессор использует эти URL как есть, не дописывая пути.
 
 Общие схемы запросов и ответов находятся в [`v3rt3p/types/src/function-state-server.ts`](https://github.com/v3rt3p/types/blob/master/src/function-state-server.ts).
 

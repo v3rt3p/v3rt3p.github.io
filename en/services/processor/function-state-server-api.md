@@ -1,6 +1,6 @@
 # Function/state server API
 
-Processor integrations use HTTP services for state and functions. Configure their base URLs with `PROCESSOR_STATE_SERVER_URLS` and `PROCESSOR_FUNCTION_SERVER_URLS`.
+Processor integrations use HTTP services for state and functions. Configure full endpoint URLs with `PROCESSOR_STATE_SERVER_URLS` (for example, `http://home-functions:8080/state`) and `PROCESSOR_FUNCTION_SERVER_URLS` (`http://home-functions:8080/functions`). The processor uses these URLs verbatim without appending paths.
 
 The shared request and response schemas are defined in [`v3rt3p/types/src/function-state-server.ts`](https://github.com/v3rt3p/types/blob/master/src/function-state-server.ts).
 
