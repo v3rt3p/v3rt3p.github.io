@@ -14,8 +14,8 @@ Source: [`v3rt3p/processor`](https://github.com/v3rt3p/processor), current `mast
 | `PROMPT_TEMPLATE_PATH` | No | `prompt.handlebars` | Main prompt template. |
 | `STATE_PROMPT_TEMPLATE_PATH` | No | `prompt-state.handlebars` | State prompt template. |
 | `FUNCTIONS_PROMPT_TEMPLATE_PATH` | No | `prompt-functions.handlebars` | Functions prompt template. |
-| `PROCESSOR_FUNCTION_SERVER_URLS` | No | - | Comma-separated function server URLs. |
-| `PROCESSOR_STATE_SERVER_URLS` | No | - | Comma-separated state server URLs. |
+| `PROCESSOR_FUNCTION_SERVER_URLS` | No | - | Full function endpoint URLs (including `/functions`), comma-separated without spaces. |
+| `PROCESSOR_STATE_SERVER_URLS` | No | - | Full state endpoint URLs (including `/state`), comma-separated without spaces. |
 | `PROCESSOR_MCP_SERVER_URLS` | No | - | MCP URLs in `URL#server-name` form. |
 | `NLP_SERVICE_URL` | No | - | Optional NLP shortcut service. |
 | `NLP_SERVICE_TIMEOUT_MS` | No | `500` | NLP request timeout. |
