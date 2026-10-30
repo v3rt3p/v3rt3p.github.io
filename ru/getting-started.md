@@ -88,6 +88,7 @@ services:
       PROCESSOR_BASIC_URL: http://processor:8080/process
       STT_GIGAAM_URL: ws://quasistreaming-gigam:8080
       SQLITE_PATH: /database/database.sqlite3
+      TZ: Europe/Moscow # Часовой пояс по умолчанию для новых станций; после подключения его можно изменить через API
   volumes:
     - ./quasar-server-db:/database
   # STT-сервис на базе GigaAM от Sber
@@ -127,17 +128,27 @@ services:
       PROCESSOR_PROMPT_TEMPLATE_PATH: /prompt.handlebars
       PROCESSOR_STATE_PROMPT_TEMPLATE_PATH: /prompt-state.handlebars
       PROCESSOR_FUNCTIONS_PROMPT_TEMPLATE_PATH: /prompt-functions.handlebars
-      TZ: Europe/Moscow
+      TZ: Europe/Moscow # Часовой пояс по умолчанию для новых станций; после подключения его можно изменить через API
       CACHE_SIZE: 1000
     volumes:
       - ./prompt.handlebars:/prompt.handlebars
       - ./prompt-state.handlebars:/prompt-state.handlebars
       - ./prompt-functions.handlebars:/prompt-functions.handlebars
+  # NTP-сервер для синхронизации времени на устройствах
+  ntp-server:
+    image: cturra/ntp:latest
+    restart: always
+    ports:
+      - "123:123/udp"
+    environment:
+      NTP_SERVERS: time1.google.com,time2.google.com,time.cloudflare.com
 ```
 
 ## Настройка DNS и proxy
 
 Направьте домены Яндекса из текущего [файла доменов `https-proxy`](https://github.com/v3rt3p/https-proxy/blob/master/domains/yandex.txt) на хост развёртывания.
+
+Также ОБЯЗАТЕЛЬНО направьте `ntp.yantp.net` на хост развёртывания, чтобы работал NTP. Иначе вы не сможете сбросить устройства или полноценно пользоваться всеми функциями.
 
 Proxy генерирует runtime-сертификаты в соответствии со своей конфигурацией.
 

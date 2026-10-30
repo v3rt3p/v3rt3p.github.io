@@ -86,6 +86,7 @@ services:
       PROCESSOR_BASIC_URL: http://processor:8080/process
       STT_GIGAAM_URL: ws://quasistreaming-gigam:8080
       SQLITE_PATH: /database/database.sqlite3
+      TZ: Europe/Moscow # Default timezone for new smart speakers, but you may change through API it after speaker is connected
   volumes:
     - ./quasar-server-db:/database
   # STT service that is based on Sber's GigaAM
@@ -125,17 +126,27 @@ services:
       PROCESSOR_PROMPT_TEMPLATE_PATH: /prompt.handlebars
       PROCESSOR_STATE_PROMPT_TEMPLATE_PATH: /prompt-state.handlebars
       PROCESSOR_FUNCTIONS_PROMPT_TEMPLATE_PATH: /prompt-functions.handlebars
-      TZ: Europe/Moscow
+      TZ: Europe/Moscow # Default timezone for new smart speakers, but you may change through API it after speaker is connected
       CACHE_SIZE: 1000
     volumes:
       - ./prompt.handlebars:/prompt.handlebars
       - ./prompt-state.handlebars:/prompt-state.handlebars
       - ./prompt-functions.handlebars:/prompt-functions.handlebars
+  # NTP server for devices to synchronize their time to
+  ntp-server:
+    image: cturra/ntp:latest
+    restart: always
+    ports:
+      - "123:123/udp"
+    environment:
+      NTP_SERVERS: time1.google.com,time2.google.com,time.cloudflare.com
 ```
 
 ## Configure DNS and the proxy
 
 Point the Yandex domains listed in the current [`https-proxy` domain file](https://github.com/v3rt3p/https-proxy/blob/master/domains/yandex.txt) at the deployment host. 
+
+Also, you MUST point `ntp.yantp.net` at the deployment host for NTP to work (otherwise you will be unable to reset devices or properly use all the functionality)
 
 The proxy generates runtime certificates according to its own configuration.
 
