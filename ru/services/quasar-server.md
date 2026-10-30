@@ -1,4 +1,4 @@
-`quasar-server` работает с протоколом устройства, предоставляет API администрирования, связывает ASR/TTS/LLM и хранит постоянную конфигурацию устройства в PostgreSQL.
+`quasar-server` работает с протоколом устройства, предоставляет API администрирования, связывает ASR/TTS/LLM и хранит постоянную конфигурацию устройства в PostgreSQL или SQLite 3.
 
 Исходный код: [`v3rt3p/quasar-server`](https://github.com/v3rt3p/quasar-server), текущая ветка `master`.
 
@@ -10,7 +10,8 @@
 | `PORT` | Нет | `31115` | Listener протокола станции. |
 | `API_PORT` | Нет | `31116` | Listener API администрирования и OpenAPI. |
 | `FUNCTION_STATE_SERVER_PORT` | Нет | `31114` | Порт локального function/state-сервера для управления другими устройствами из `processor`. |
-| `POSTGRES_URL` | Да | - | Строка подключения PostgreSQL. |
+| `POSTGRES_URL` | Да* | - | Строка подключения PostgreSQL. Нужно указать её или `SQLITE_PATH`. Если заданы обе переменные, используется PostgreSQL. |
+| `SQLITE_PATH` | Да* | - | Путь к базе SQLite 3. |
 | `PROCESSOR_BASIC_URL` | Да | - | Endpoint processor. |
 | `STT_GIGAAM_URL` | Да | - | WebSocket endpoint потокового ASR. |
 | `TTS_OPENAI_BASE_URL` | Да | `http://10.0.3.137:8000` | Base URL OpenAI-совместимого TTS. |
@@ -34,9 +35,11 @@ quasar-server:
     STT_GIGAAM_URL: ws://quasistreaming-gigam:8080
     TTS_OPENAI_BASE_URL: http://supertonic-tts:9150
     TTS_OPENAI_VOICE: F1
-    POSTGRES_URL: postgres://quasar:quasar@postgres:5432/quasar
+    SQLITE_PATH: /database/database.sqlite3
   ports:
     - "31116:31116"
+  volumes:
+    - ./quasar-server-db:/database
 ```
 
 ## API и код

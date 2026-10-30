@@ -10,7 +10,8 @@ Source: [`v3rt3p/quasar-server`](https://github.com/v3rt3p/quasar-server), curre
 | `PORT` | No | `31115` | Station-facing HTTP/protocol listener. |
 | `API_PORT` | No | `31116` | Administration and OpenAPI listener. |
 | `FUNCTION_STATE_SERVER_PORT` | No | `31114` | Local function/state server port to use with `processor` to control other devices. |
-| `POSTGRES_URL` | Yes | - | PostgreSQL connection string. |
+| `POSTGRES_URL` | Yes* | - | PostgreSQL connection string. Either that, or `SQLITE_PATH`. If both present, PostgreSQL will be used |
+| `SQLITE_PATH` | Yes* | - | SQLite 3 database path. |
 | `PROCESSOR_BASIC_URL` | Yes | - | Processor endpoint used for processing. |
 | `STT_GIGAAM_URL` | Yes | - | Streaming ASR WebSocket endpoint. |
 | `TTS_OPENAI_BASE_URL` | Yes | `http://10.0.3.137:8000` | OpenAI-compatible TTS base URL. |
@@ -34,9 +35,11 @@ quasar-server:
     STT_GIGAAM_URL: ws://quasistreaming-gigam:8080
     TTS_OPENAI_BASE_URL: http://supertonic-tts:9150
     TTS_OPENAI_VOICE: F1
-    POSTGRES_URL: postgres://quasar:quasar@postgres:5432/quasar
+    SQLITE_PATH: /database/database.sqlite3
   ports:
     - "31116:31116"
+  volumes:
+    - ./quasar-server-db:/database
 ```
 
 ## API and code

@@ -85,17 +85,9 @@ services:
       TTS_OPENAI_VOICE: F1 # Voice that you will use - in current setup they are: M1-M5 (male) and F1-F6 (female)
       PROCESSOR_BASIC_URL: http://processor:8080/process
       STT_GIGAAM_URL: ws://quasistreaming-gigam:8080
-      POSTGRES_URL: postgres://quasar:quasar@postgres:5432/quasar
-  # PostgreSQL server that is used by quasar-server to store speaker configs
-  postgres:
-    image: postgres:17
-    restart: always
-    environment:
-      POSTGRES_USER: quasar
-      POSTGRES_PASSWORD: quasar
-      POSTGRES_DB: quasar
-    volumes:
-      - ./postgres-data:/var/lib/postgresql/data
+      SQLITE_PATH: /database/database.sqlite3
+  volumes:
+    - ./quasar-server-db:/database
   # STT service that is based on Sber's GigaAM
   quasistreaming-gigam:
     build:

@@ -3,7 +3,7 @@
 Вам понадобятся:
 
 - Linux;
-- достаточно места для PostgreSQL и речевых моделей;
+- достаточно места для базы SQLite 3 и речевых моделей;
 - API-ключ OpenAI-совместимой LLM;
 - доступ к DNS-доменам Яндекса, которые использует proxy;
 - Яндекс.Станция, которую можно сбросить и подключить к Wi-Fi.
@@ -87,17 +87,9 @@ services:
       TTS_OPENAI_VOICE: F1 # Доступные голоса: M1-M5 и F1-F6
       PROCESSOR_BASIC_URL: http://processor:8080/process
       STT_GIGAAM_URL: ws://quasistreaming-gigam:8080
-      POSTGRES_URL: postgres://quasar:quasar@postgres:5432/quasar
-  # PostgreSQL хранит конфигурации станций для quasar-server
-  postgres:
-    image: postgres:17
-    restart: always
-    environment:
-      POSTGRES_USER: quasar
-      POSTGRES_PASSWORD: quasar
-      POSTGRES_DB: quasar
-    volumes:
-      - ./postgres-data:/var/lib/postgresql/data
+      SQLITE_PATH: /database/database.sqlite3
+  volumes:
+    - ./quasar-server-db:/database
   # STT-сервис на базе GigaAM от Sber
   quasistreaming-gigam:
     build:

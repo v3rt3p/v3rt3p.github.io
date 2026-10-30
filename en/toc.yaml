@@ -57,7 +57,5 @@ items:
             href: services/processor/function-state-server-api.md
       - name: home-functions
         href: services/home-functions.md
-      - name: PostgreSQL
-        href: services/postgres.md
   - name: Operations
     href: operations.md

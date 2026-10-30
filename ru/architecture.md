@@ -11,7 +11,7 @@ flowchart LR
   processor -- FSS API --> quasar
   processor -- MCP API --> mcp-servers[MCP-серверы]
   quasar -- OpenAI API --> tts[TTS]
-  quasar <--> db[(PostgreSQL)]
+  quasar <--> db[(SQLite 3 / PostgreSQL)]
 ```
 
 ## Основной путь
