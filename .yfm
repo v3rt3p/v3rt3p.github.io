@@ -1,5 +1,5 @@
 allowHTML: true
-lang: 'en'
-langs: ['en', 'ru']
+lang: 'ru'
+langs: ['ru', 'en']
 interface:
   favicon-src: '/assets/v3rt3p-logo.png'
